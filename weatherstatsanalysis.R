@@ -32,3 +32,16 @@ df <- raw %>%
     doy       = yday(date)
   ) %>%
   filter(!is.na(date))
+
+
+doy_avg <- df %>%
+  filter(!is.na(meant)) %>%
+  group_by(doy) %>%
+  summarise(
+    lta_meant = mean(meant, na.rm = TRUE),
+    lta_maxt  = mean(maxt,  na.rm = TRUE),
+    lta_mint  = mean(mint,  na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(doy)
+  
