@@ -11,6 +11,7 @@ library(forecast)
 library(ggridges)
 
 filter <- dplyr::filter
+
 raw <- read.csv("Data Sherkin Island.csv",
                 skip        = 13,
                 header      = TRUE,
