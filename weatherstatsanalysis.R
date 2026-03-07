@@ -17,3 +17,18 @@ raw <- read.csv("Data Sherkin Island.csv",
                 header      = TRUE,
                 na.strings  = c("", " "),
                 stringsAsFactors = FALSE)
+
+df <- raw %>%
+  select(date, rain = rain, maxt = maxt, mint = mint) %>%
+  mutate(
+    date      = dmy(date),
+    rain      = suppressWarnings(as.numeric(rain)),
+    maxt      = suppressWarnings(as.numeric(maxt)),
+    mint      = suppressWarnings(as.numeric(mint)),
+    meant     = (maxt + mint) / 2,
+    year      = year(date),
+    month     = month(date, label = TRUE, abbr = TRUE),
+    month_num = month(date),
+    doy       = yday(date)
+  ) %>%
+  filter(!is.na(date))
