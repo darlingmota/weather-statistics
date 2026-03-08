@@ -162,3 +162,8 @@ p3 <- monthly_avg %>%
 print(p3)
 ggsave("plot3_monthly_rain_bar.png", p3, width = 8, height = 5, dpi = 180)
 
+monthly_rain_ts <- df %>%
+  filter(!is.na(rain), year >= 1975) %>%
+  group_by(year, month_num, month) %>%
+  summarise(total = sum(rain, na.rm = TRUE), .groups = "drop")
+
