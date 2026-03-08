@@ -174,3 +174,11 @@ p4 <- ggplot(monthly_rain_ts, aes(x = year, y = fct_rev(month), fill = total)) +
     name = "Rain (mm)", na.value = "grey90"
   ) +
   labs(
+    title    = "Monthly rainfall over time",
+    subtitle = "Each cell = total rainfall in that month/year | Darker = wetter",
+    x = "Year", y = NULL
+  ) +
+  theme_clean + theme(axis.text.y = element_text(size = 8))
+
+print(p4)
+ggsave("plot4_rain_heatmap.png", p4, width = 12, height = 5, dpi = 180)
