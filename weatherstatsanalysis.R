@@ -143,3 +143,6 @@ p2 <- df %>%
     x = "Mean Daily Temperature (°C)", y = NULL
   ) +
   theme_clean
+
+print(p2)
+ggsave("plot2_temp_ridgeline.png", p2, width = 8, height = 7, dpi = 180)
