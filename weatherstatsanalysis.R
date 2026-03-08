@@ -102,3 +102,44 @@ print(yearly_anomaly %>% arrange(desc(z_score)) %>% head(5))
 cat("Top five coldest years z-score \n")
 print(yearly_anomaly %>% arrange(z_score) %>% head(5))
 
+theme_clean <- theme_minimal(base_size = 11) +
+  theme(
+    plot.title       = element_text(face = "bold", size = 13),
+    plot.subtitle    = element_text(size = 9, colour = "grey40"),
+    panel.grid.minor = element_blank(),
+    plot.margin      = margin(10, 15, 10, 10)
+  )
+
+chosen_year <- 2024
+temp_year <- df %>% filter(year == chosen_year)
+
+p1 <- ggplot(temp_year, aes(x = date)) +
+  geom_ribbon(aes(ymin = p10, ymax = p90), fill = "#BDD7EE", alpha = 0.4) +
+  geom_ribbon(aes(ymin = p25, ymax = p75), fill = "#5B9BD5", alpha = 0.4) +
+  geom_line(aes(y = lta_meant), colour = "black", linewidth = 0.9) +
+  geom_line(aes(y = meant), colour = "#C00000", linewidth = 0.5, alpha = 0.8) +
+  labs(
+    title    = "Daily mean temperature vs long term average at Sherkin Island 2024",
+    subtitle = "Red = daily mean | Black = LTA | Dark band = 25th to 75th percentile | Light band = 10th to 90th percentile",
+    x = "Date", y = "Mean temperature (°C)"
+  ) +
+  theme_clean
+
+print(p1)
+ggsave("plot1_temp_vs_lta.png", p1, width = 10, height = 5, dpi = 180)
+
+p2 <- df %>%
+  filter(!is.na(meant)) %>%
+  ggplot(aes(x = meant, y = fct_rev(month), fill = after_stat(x))) +
+  geom_density_ridges_gradient(scale = 2.5, rel_min_height = 0.01,
+                               quantile_lines = TRUE, quantiles = c(0.25, 0.5, 0.75)) +
+  scale_fill_gradientn(
+    colours = c("#313695", "#74ADD1", "#FEE090", "#F46D43", "#A50026"),
+    name = "Temp (°C)"
+  ) +
+  labs(
+    title    = "Monthly Distribution of Mean Daily Temperature",
+    subtitle = "Vertical lines mark Q1, median, and Q3 for each month",
+    x = "Mean Daily Temperature (°C)", y = NULL
+  ) +
+  theme_clean
