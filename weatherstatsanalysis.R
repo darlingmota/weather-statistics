@@ -1,12 +1,9 @@
-for (pkg in c("tidyverse", "forecast", "ggridges")) {
-  if (!pkg %in% rownames(installed.packages())) install.packages(pkg)
-}
-
 if (!requireNamespace("tidyverse", quietly = TRUE)) install.packages("tidyverse")
 if (!requireNamespace("forecast",  quietly = TRUE)) install.packages("forecast")
 if (!requireNamespace("ggridges",  quietly = TRUE)) install.packages("ggridges")
 
 library(tidyverse)
+library(lubridate)
 library(forecast)
 library(ggridges)
 
