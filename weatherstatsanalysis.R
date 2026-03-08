@@ -188,3 +188,10 @@ p5 <- yearly_anomaly %>%
   ggplot(aes(x = year, y = z_score, fill = direction)) +
   geom_col(width = 0.8) +
   scale_fill_manual(values = c("Warmer" = "#C00000", "Cooler" = "#2171B5"), name = NULL) +
+  geom_hline(yintercept = c(-2, 2), linetype = "dashed", colour = "grey50") +
+  labs(
+    title    = "Standardised annual temperature anomaly",
+    subtitle = "Z scores relative to long term mean | Dashed lines = +/-2 standard deviations",
+    x = "Year", y = "Z score"
+  ) +
+  theme_clean
