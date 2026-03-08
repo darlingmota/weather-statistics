@@ -79,3 +79,11 @@ df <- df %>% mutate(rainy_day = !is.na(rain) & rain > 0.1)
 
 p_rain <- mean(df$rainy_day[!is.na(df$rain)])
 cat(sprintf("P(rainy day) = %.4f  (%.1f%% of days)\n", p_rain, p_rain * 100))
+
+monthly_avg <- df %>%
+  filter(!is.na(rain)) %>%
+  group_by(year, month_num, month) %>%
+  summarise(total = sum(rain, na.rm = TRUE), .groups = "drop") %>%
+  group_by(month_num, month) %>%
+  summarise(avg_rain = mean(total, na.rm = TRUE), .groups = "drop") %>%
+  arrange(month_num)
