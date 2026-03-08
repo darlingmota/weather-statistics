@@ -146,3 +146,19 @@ p2 <- df %>%
 
 print(p2)
 ggsave("plot2_temp_ridgeline.png", p2, width = 8, height = 7, dpi = 180)
+
+p3 <- monthly_avg %>%
+  ggplot(aes(x = fct_reorder(month, month_num), y = avg_rain, fill = avg_rain)) +
+  geom_col(width = 0.75, colour = "white") +
+  geom_text(aes(label = round(avg_rain, 0)), vjust = -0.4, size = 3, colour = "grey30") +
+  scale_fill_gradient(low = "#C6DBEF", high = "#08519C", name = "mm") +
+  labs(
+    title    = "Average monthly rainfall at Sherkin Island",
+    subtitle = "Mean total precipitation in mm per calendar month across full record from 1972 to 2025",
+    x = NULL, y = "Average Rainfall in mm"
+  ) +
+  theme_clean + theme(legend.position = "none")
+
+print(p3)
+ggsave("plot3_monthly_rain_bar.png", p3, width = 8, height = 5, dpi = 180)
+
