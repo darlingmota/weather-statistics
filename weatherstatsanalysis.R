@@ -185,3 +185,6 @@ ggsave("plot4_rain_heatmap.png", p4, width = 12, height = 5, dpi = 180)
 
 p5 <- yearly_anomaly %>%
   mutate(direction = ifelse(z_score >= 0, "Warmer", "Cooler")) %>%
+  ggplot(aes(x = year, y = z_score, fill = direction)) +
+  geom_col(width = 0.8) +
+  scale_fill_manual(values = c("Warmer" = "#C00000", "Cooler" = "#2171B5"), name = NULL) +
