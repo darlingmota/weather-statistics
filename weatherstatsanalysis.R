@@ -87,3 +87,18 @@ monthly_avg <- df %>%
   group_by(month_num, month) %>%
   summarise(avg_rain = mean(total, na.rm = TRUE), .groups = "drop") %>%
   arrange(month_num)
+
+cat("\nAverage monthly rainfall in mm:\n")
+print(as.data.frame(monthly_avg[, c("month", "avg_rain")]))
+
+yearly_anomaly <- df %>%
+  filter(!is.na(dep_meant)) %>%
+  group_by(year) %>%
+  summarise(mean_dep = mean(dep_meant, na.rm = TRUE), .groups = "drop") %>%
+  mutate(z_score = as.numeric(scale(mean_dep)))
+
+cat("Top five warmest years z-score \n")
+print(yearly_anomaly %>% arrange(desc(z_score)) %>% head(5))
+cat("Top five coldest years z-score \n")
+print(yearly_anomaly %>% arrange(z_score) %>% head(5))
+
