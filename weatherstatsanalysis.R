@@ -76,3 +76,6 @@ for (v in c("meant", "maxt", "mint")) {
 cat(" Rainfall analysis ")
 
 df <- df %>% mutate(rainy_day = !is.na(rain) & rain > 0.1)
+
+p_rain <- mean(df$rainy_day[!is.na(df$rain)])
+cat(sprintf("P(rainy day) = %.4f  (%.1f%% of days)\n", p_rain, p_rain * 100))
