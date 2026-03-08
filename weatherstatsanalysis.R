@@ -39,3 +39,30 @@ doy_avg <- df %>%
     lta_mint  = mean(mint,  na.rm = TRUE),
     .groups = "drop"
   ) %>%
+  arrange(doy) %>%
+  mutate(
+    lta_meant = as.numeric(ma(lta_meant, order = 30, centre = TRUE)),
+    lta_maxt  = as.numeric(ma(lta_maxt,  order = 30, centre = TRUE)),
+    lta_mint  = as.numeric(ma(lta_mint,  order = 30, centre = TRUE))
+  )
+
+doy_percentiles <- df %>%
+  filter(!is.na(meant)) %>%
+  group_by(doy) %>%
+  summarise(
+    p10 = quantile(meant, 0.10, na.rm = TRUE),
+    p25 = quantile(meant, 0.25, na.rm = TRUE),
+    p75 = quantile(meant, 0.75, na.rm = TRUE),
+    p90 = quantile(meant, 0.90, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+df <- df %>%
+  left_join(doy_avg, by = "doy") %>%
+  left_join(doy_percentiles, by = "doy") %>%
+  mutate(
+    dep_meant = meant - lta_meant,
+    dep_maxt  = maxt  - lta_maxt,
+    dep_mint  = mint  - lta_mint
+  )
+
