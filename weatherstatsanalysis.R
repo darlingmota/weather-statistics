@@ -167,3 +167,10 @@ monthly_rain_ts <- df %>%
   group_by(year, month_num, month) %>%
   summarise(total = sum(rain, na.rm = TRUE), .groups = "drop")
 
+p4 <- ggplot(monthly_rain_ts, aes(x = year, y = fct_rev(month), fill = total)) +
+  geom_tile(colour = "white", linewidth = 0.2) +
+  scale_fill_gradientn(
+    colours = c("#F7FBFF", "#C6DBEF", "#6BAED6", "#2171B5", "#08306B"),
+    name = "Rain (mm)", na.value = "grey90"
+  ) +
+  labs(
