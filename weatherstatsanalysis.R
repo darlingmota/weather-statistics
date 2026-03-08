@@ -66,3 +66,10 @@ df <- df %>%
     dep_mint  = mint  - lta_mint
   )
 
+cat("Temperature quartiles \n")
+for (v in c("meant", "maxt", "mint")) {
+  q <- quantile(df[[v]], probs = c(0, 0.25, 0.5, 0.75, 1), na.rm = TRUE)
+  cat(sprintf("%s -> Min: %.1f  Q1: %.1f  Median: %.1f  Q3: %.1f  Max: %.1f\n",
+              v, q[1], q[2], q[3], q[4], q[5]))
+}
+
