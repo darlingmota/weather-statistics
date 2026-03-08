@@ -73,3 +73,6 @@ for (v in c("meant", "maxt", "mint")) {
               v, q[1], q[2], q[3], q[4], q[5]))
 }
 
+cat(" Rainfall analysis ")
+
+df <- df %>% mutate(rainy_day = !is.na(rain) & rain > 0.1)
