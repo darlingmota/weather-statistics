@@ -249,5 +249,5 @@ p5 <- yearly_anomaly %>%
 print(p5)
 ggsave("plot5_anomaly_zscore.png", p5, width = 10, height = 4, dpi = 180)
 
-cat("\nSaved plots.\n")
+cat("\nSaved plots.\n") #gg
 
